@@ -7,3 +7,5 @@
 
 # Pull base image.
 FROM python:2-onbuild
+
+CMD flexget daemon start
