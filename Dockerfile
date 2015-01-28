@@ -8,4 +8,8 @@
 # Pull base image.
 FROM python:2-onbuild
 
+VOLUME ["/flexget"]
+
+WORKDIR /flexget
+
 CMD flexget daemon start
