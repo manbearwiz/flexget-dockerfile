@@ -8,11 +8,29 @@ How to use this image
 
 ###Run on host networking
 
-This example uses host networking for simplicitly. Also note the `-v` argument. This image will expect the directory to contain a valid `config.yml`. Flexget will also use this directory for storing the resulting database and log file.
+This example uses host networking for simplicitly. Also note the `-v` arguments. This image will expect the `flexget` directory to contain a valid `config.yml`. Flexget will also use this directory for storing the resulting database and log file. The `input` directory should contain the files that have been downloaded (from transmission, youtube-dl, etc). The ouput directory is where the sorted and renamed files will be moved to.
 
 ```
-sudo docker run -d --net="host" --name flexget -v /home/kevin/flexget:/flexget kmb32123/flexget-dockerfile
+sudo docker run -d --net="host" --name flexget -v /home/kevin/flexget:/flexget -v /home/kevin/Downloads:/input -v /home/kevin/media:/output kmb32123/flexget-dockerfile
 ```
+
+###View log information
+
+To monitor the fleget logs (highly recommended) simply run:
+
+```
+sudo docker logs -f flexget
+```
+
+###Run out of schedule
+
+Someimes you dont want to wait for the flexget process to kick on from the scheduler. In these cases you can simply enter:
+
+```
+sudo docker exec -it flexget flexget execute
+```
+
+Note the first `flexget` is the container name, and the second is the CLI command. This will run all tasks regardless of scheduling.
 
 Implementation
 --------------
