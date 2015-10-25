@@ -11,7 +11,7 @@ How to use this image
 This example uses host networking for simplicitly. Also note the `-v` arguments. This image will expect the `flexget` directory to contain a valid `config.yml`. Flexget will also use this directory for storing the resulting database and log file. The `input` directory should contain the files that have been downloaded (from transmission, youtube-dl, etc). The ouput directory is where the sorted and renamed files will be moved to.
 
 ```
-sudo docker run -d --net="host" --name flexget -v /home/kevin/flexget:/flexget -v /home/kevin/Downloads:/input -v /home/kevin/media:/output kmb32123/flexget-dockerfile
+sudo docker run -d --net="host" --name flexget -v /etc/localtime:/etc/localtime:ro -v /home/kevin/flexget:/flexget -v /home/kevin/Downloads:/input -v /home/kevin/media:/output kmb32123/flexget-dockerfile
 ```
 
 ###View log information
