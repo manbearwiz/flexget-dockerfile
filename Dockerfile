@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM python:2-onbuild
+FROM python:2
 
 VOLUME ["/flexget"]
 VOLUME ["/input"]
@@ -19,6 +19,7 @@ RUN set -x \
   && mkdir -p /usr/src/app \
   && cd /usr/src/app \
   && curl -SL "https://github.com/Flexget/Flexget/archive/${FLEXGET_VERSION}.tar.gz" | tar xz \
+  && cd ./Flexget-${FLEXGET_VERSION}
   && pip install paver \
   && pip install . \
   && pip install -r jenkins-requirements.txt \
