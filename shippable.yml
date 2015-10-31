@@ -1,2 +1,2 @@
-script:
-  - true
+language: python
+script: nosetests -q --attr !online
