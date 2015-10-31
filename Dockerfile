@@ -13,4 +13,4 @@ VOLUME ["/output"]
 
 WORKDIR /flexget
 
-CMD flexget daemon start
+CMD rm -f /flexget/.config-lock && flexget daemon start
