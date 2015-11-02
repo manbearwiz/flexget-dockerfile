@@ -1,2 +1,4 @@
 language: python
-script: nosetests -q --attr !online
+before_script: mkdir -p shippable/testresults
+script:
+  - nosetests --attr !online --with-xunit --xunit-file=shippable/testresults/nosetests.xml
