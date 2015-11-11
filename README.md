@@ -1,3 +1,5 @@
+![Shippable Shield](https://img.shields.io/shippable/56340f801895ca4474223cf7/build-flexget.svg?style=flat-square)
+
 flexget-dockerfile
 ==================
 
