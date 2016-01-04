@@ -1,6 +1,6 @@
 ![Docker Stars Shield](https://img.shields.io/docker/stars/kmb32123/flexget-dockerfile.svg?style=flat-square)
 ![Docker Pulls Shield](https://img.shields.io/docker/pulls/kmb32123/flexget-dockerfile.svg?style=flat-square)
-
+![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 flexget-dockerfile
 ==================
 
