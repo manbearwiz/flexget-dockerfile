@@ -15,7 +15,7 @@ WORKDIR /flexget
 
 ENV FLEXGET_VERSION 1.2.376
 
-ENV LANG en_US.UTF-8
+ENV LANG C.UTF-8
 
 RUN set -x \
   && mkdir -p /usr/src/app \
