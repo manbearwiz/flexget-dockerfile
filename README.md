@@ -11,15 +11,31 @@ How to use this image
 
 ###Run on host networking
 
-This example uses host networking for simplicitly. Also note the `-v` arguments. This image will expect the `flexget` directory to contain a valid `config.yml`. Flexget will also use this directory for storing the resulting database and log file. The `input` directory should contain the files that have been downloaded (from transmission, youtube-dl, etc). The ouput directory is where the sorted and renamed files will be moved to.
+This example uses host networking for simplicity. Also note the `-v` arguments. This image will expect the `flexget` directory to contain a valid [`config.yml`](http://flexget.com/wiki/Cookbook). Flexget will also use this directory for storing the resulting database and log file. The other directories, `input` and `output` are essentially working directories for Flexget. The intention is that the `input` directory is where files are downloaded to (from transmission, youtube-dl, etc) and the `output` directory is where the sorted and renamed files will be moved to; however, this can all be changed via the Flexget configuration file.
 
 ```
 sudo docker run -d --net="host" --name flexget -v /home/kevin/flexget:/flexget -v /home/kevin/Downloads:/input -v /home/kevin/media:/output kmb32123/flexget-dockerfile
 ```
 
+###Configuration
+
+Because of the way the volumes are attached to the host, paths can be very simple. An example of a task configration that sorts tv episode looks like so:
+
+```
+sort-tvseries:
+  find:
+    path: /input/tv
+    regexp: '.*\.(mkv|mp4)$'
+    recursive: yes
+  template: tv
+  move:
+    to: /output/video/tv/{{series_name}}/Season {{series_season|pad(2)}}
+    filename: 'S{{series_season|pad(2)}} E{{series_episode|pad(2)}} {{tvdb_ep_name}}'
+```
+
 ###View log information
 
-To monitor the fleget logs (highly recommended) simply run:
+To monitor the flexget logs (highly recommended) simply run:
 
 ```
 sudo docker logs -f flexget
@@ -27,7 +43,7 @@ sudo docker logs -f flexget
 
 ###Run out of schedule
 
-Someimes you dont want to wait for the flexget process to kick on from the scheduler. In these cases you can simply enter:
+Sometimes you don't want to wait for the flexget process to kick on from the scheduler. In these cases you can simply enter:
 
 ```
 sudo docker exec -it flexget flexget execute
