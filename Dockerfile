@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM python:2
+FROM python:2-alpine
 
 VOLUME ["/flexget"]
 VOLUME ["/input"]
