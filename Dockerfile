@@ -23,7 +23,7 @@ RUN set -x \
   && cd /usr/src/app \
   && curl -SL "https://github.com/Flexget/Flexget/archive/${FLEXGET_VERSION}.tar.gz" | tar xz \
   && cd ./Flexget-${FLEXGET_VERSION} \
-  && pip install paver \
+  && pip install -e git+https://github.com/paver/paver.git#egg=Paver \
   && pip install . \
   && pip install -r jenkins-requirements.txt \
   && python setup.py
