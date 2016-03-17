@@ -7,6 +7,7 @@ build:
         image_name: flexget
         image_tag: shippable
         pull: false
+        options: "--entrypoint /bin/bash"
     ci:
         - mkdir -p shippable/testresults
         - nosetests --attr !online --with-xunit --xunit-file=shippable/testresults/nosetests.xml
