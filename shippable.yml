@@ -2,7 +2,7 @@ language: python
 
 build:
     pre_ci:
-        - docker build -t flexget:shippable 
+        - docker build -t flexget:shippable .
     pre_ci_boot:
         image_name: flexget
         image_tag: shippable
