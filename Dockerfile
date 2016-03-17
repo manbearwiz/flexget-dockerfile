@@ -18,7 +18,7 @@ ENV FLEXGET_VERSION 1.2.376
 ENV LANG C.UTF-8
 
 RUN set -x \
-  && apk --update add curl ca-certificates tar && \
+  && apk --update add curl ca-certificates tar \
   && mkdir -p /usr/src/app \
   && cd /usr/src/app \
   && curl -SL "https://github.com/Flexget/Flexget/archive/${FLEXGET_VERSION}.tar.gz" | tar xz \
