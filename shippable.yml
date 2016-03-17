@@ -1,4 +1,22 @@
 language: python
-before_script: mkdir -p shippable/testresults
-script:
-  - nosetests --attr !online --with-xunit --xunit-file=shippable/testresults/nosetests.xml
+
+build:
+    pre_ci:
+        - docker build -t flexget:shippable 
+    pre_ci_boot:
+        image_name: flexget
+        image_tag: shippable
+        pull: false
+    ci:
+        - mkdir -p shippable/testresults
+        - nosetests --attr !online --with-xunit --xunit-file=shippable/testresults/nosetests.xml
+
+integrations:
+    notifications:
+        - integrationName: email
+          type: email
+          recipients:
+            - manbearwiz@gmail.com
+          on_success: always
+          on_failure: always
+
