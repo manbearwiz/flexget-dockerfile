@@ -19,7 +19,7 @@ Flexget Dockerfile for automated Docker builds.
 
 ## Run on host networking
 
-Note the `-v` argument, this image will expect the `flexget` directory to contain a valid [`config.yml`](http://flexget.com/wiki/Cookbook). Flexget will also use this directory for storing the resulting database and log file. 
+Note the `-v` argument, this image will expect the `flexget` directory to contain a valid [`config.yml`](http://flexget.com/wiki/Cookbook). Flexget will also use this directory for storing the resulting database and log file.  I use Flexget to auto add torrent files to my client, becuase of this i do not need the use of other directories to hold torrent files for a watch directory.
 
 ```
 sudo docker build -t flexget-image .
@@ -79,6 +79,6 @@ Note the first `flexget` is the container name, and the second is the CLI comman
 
 # Implementation
 
-This image is based on [`python:2-onbuild`](https://registry.hub.docker.com/_/python/), and  [`python:2-alphine`](https://registry.hub.docker.com/_/python/).  To cut down the size of the image it will pull from [Apline 3.3](https://hub.docker.com/_/alpine/), and will build python 2.7 with the onbuild fetures and install trasmissionrpc, and flexget on top.
+This image is based on [`python:2.7-Alphine`](https://registry.hub.docker.com/_/python/).  To cut down the size of the image it will pull from [Apline 3.3](https://hub.docker.com/_/alpine/), and will build python 2.7, and than install trasmissionrpc, and flexget on top.
 
 As of right now, I am looking at anychanges that may be needed, and will move from there.
