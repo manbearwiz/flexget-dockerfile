@@ -1,5 +1,6 @@
-![Docker Stars Shield](https://img.shields.io/docker/stars/kmb32123/flexget-dockerfile.svg?style=flat-square)
-![Docker Pulls Shield](https://img.shields.io/docker/pulls/kmb32123/flexget-dockerfile.svg?style=flat-square)
+This has been built on [`manbearwiz's flexget-dockerfile project`](https://github.com/manbearwiz/flexget-dockerfile).  This project has been altered to run on Alpine 3.3.
+
+
 ![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 # flexget-dockerfile
 
@@ -18,27 +19,45 @@ Flexget Dockerfile for automated Docker builds.
 
 ## Run on host networking
 
-This example uses host networking for simplicity. Also note the `-v` arguments. This image will expect the `flexget` directory to contain a valid [`config.yml`](http://flexget.com/wiki/Cookbook). Flexget will also use this directory for storing the resulting database and log file. The other directories, `input` and `output` are essentially working directories for Flexget. The intention is that the `input` directory is where files are downloaded to (from transmission, youtube-dl, etc) and the `output` directory is where the sorted and renamed files will be moved to; however, this can all be changed via the Flexget configuration file.
+Note the `-v` argument, this image will expect the `flexget` directory to contain a valid [`config.yml`](http://flexget.com/wiki/Cookbook). Flexget will also use this directory for storing the resulting database and log file.  I use Flexget to auto add torrent files to my client, becuase of this i do not need the use of other directories to hold torrent files for a watch directory.
 
 ```
-sudo docker run -d --net="host" --name flexget -v /home/kevin/flexget:/flexget -v /home/kevin/Downloads:/input -v /home/kevin/media:/output kmb32123/flexget-dockerfile
+sudo docker build -t flexget-image .
+sudo docker run -d --name flexget -v /flexget/config:/flexget flexget-image
 ```
 
 ## Configuration
 
-Because of the way the volumes are attached to the host, paths can be very simple. An example of a task configration that sorts tv episode looks like so:
+here is a sample config.yml file.  This will cheak the rss feed at 5, 15, 35, 45 past every hour, every day. Once a new item has been found it will be downloaded, and then a connection to transmission will be made and the new item will be added to the default location of your trasmission setup.
 
 ```
-sort-tvseries:
-  find:
-    path: /input/tv
-    regexp: '.*\.(mkv|mp4)$'
-    recursive: yes
-  template: tv
-  move:
-    to: /output/video/tv/{{series_name}}/Season {{series_season|pad(2)}}
-    filename: 'S{{series_season|pad(2)}} E{{series_episode|pad(2)}} {{tvdb_ep_name}}'
+schedules:
+  - tasks: [feed1]
+    schedule:
+      minute: 5,15,35,45
+
+templates:
+  tv:
+    download: '/output/'
+    series:
+      - some one
+	  - show two
+    transmission:
+      enabled: yes
+      host: server
+      port: 9091
+      username: username
+      password: password
+
+tasks:
+  feed1:
+    rss: 'http://feed.xml'
+    template: tv
+
 ```
+
+This will add any files to in this case a transmission server.
+
 
 ## View log information
 
@@ -60,6 +79,6 @@ Note the first `flexget` is the container name, and the second is the CLI comman
 
 # Implementation
 
-This image is based on [`python:2-onbuild`](https://registry.hub.docker.com/_/python/) and consequently [`debian:jessie`](https://registry.hub.docker.com/u/library/debian/).
+This image is based on [`python:2.7-Alphine`](https://registry.hub.docker.com/_/python/).  To cut down the size of the image it will pull from [Apline 3.3](https://hub.docker.com/_/alpine/), and will build python 2.7, and than install trasmissionrpc, and flexget on top.
 
-As of now, the version of Flexget installed will soley depend on the latest version available in the [Python Package Index](https://pypi.python.org/pypi/FlexGet). I may change this in the future to [manually install](https://github.com/Flexget/Flexget#how-to-use-git-checkout) from [flexget:master](https://github.com/Flexget/Flexget) but for right now this suites my needs.
+As of right now, I am looking at anychanges that may be needed, and will move from there.
