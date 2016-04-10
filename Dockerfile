@@ -59,7 +59,7 @@ RUN set -ex \
 	&& apk del .build-deps .fetch-deps \
 	&& rm -rf /usr/src/python
 
-RUN pip install --no-cache-dir -r transmissionrpc flexget
+RUN pip install --no-cache-dir transmissionrpc flexget
 
 VOLUME ["/flexget"]
 
