@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM python:2-onbuild
+FROM python:3.6-onbuild
 
 VOLUME ["/flexget"]
 VOLUME ["/input"]
