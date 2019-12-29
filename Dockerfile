@@ -11,7 +11,11 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r requirements.txt
+
+RUN apk add --update --no-cache --virtual gcc \
+  && pip install --no-cache-dir --upgrade pip \
+  && pip install --no-cache-dir -r requirements.txt \
+  && apk del gcc
 
 VOLUME ["/flexget"]
 VOLUME ["/input"]
