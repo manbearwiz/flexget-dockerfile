@@ -1,3 +1,3 @@
 transmission-rpc==4.3.0
-FlexGet==3.7.9
+FlexGet==3.7.10
 subliminal==2.1.0
